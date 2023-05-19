@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res)=>{
-    res.send('Welcome to Toy Marketplace')
+    res.send('Welcome to Kids Choice')
 })
 
 

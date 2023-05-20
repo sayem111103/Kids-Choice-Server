@@ -36,21 +36,26 @@ async function run() {
         return;
       }
     });
+
     const toyCollection = client.db("ToyDB").collection("allToy");
 
     app.get("/allToy", async (req, res) => {
       const allToy = await toyCollection
         .find({})
-        .sort({ subCategory: -1 })
         .toArray();
       res.send(allToy);
     });
     
     app.get('/allToy/:subCatagory', async(req, res)=>{
       const catagory = req.params.subCatagory;
-      console.log(catagory)
       const query = {subCategory: catagory}
       const result = await toyCollection.find(query).toArray();
+      res.send(result)
+    });
+
+    app.post('/allToy', async(req, res)=>{
+      const toy= req.body;
+      const result = await toyCollection.insertOne(toy);
       res.send(result)
     })
 

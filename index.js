@@ -30,7 +30,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect((error)=>{
+    client.connect((error)=>{
       if(error){
         console.log(error);
         return;
@@ -45,6 +45,15 @@ async function run() {
         .toArray();
       res.send(allToy);
     });
+    
+    app.get('/allToy/:subCatagory', async(req, res)=>{
+      const catagory = req.params.subCatagory;
+      console.log(catagory)
+      const query = {subCategory: catagory}
+      const result = await toyCollection.find(query).toArray();
+      res.send(result)
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(

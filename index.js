@@ -62,7 +62,21 @@ async function run() {
       } else {
         const result = await toyCollection
           .find(query)
-          .sort({ price: -1 })
+          .toArray();
+        res.send(result);
+      }
+    });
+
+    app.get('/toysorting', async(req, res)=> {
+      const sortingId = req.query.sort;
+      const email = req.query.email;
+      const query = { sellerEmail: email };
+      if (!req.query?.email) {
+        return res.status(404).send({ error: true, message: "not found" });
+      } else {
+        const result = await toyCollection
+          .find(query)
+          .sort({price: sortingId})
           .toArray();
         res.send(result);
       }
